@@ -1,5 +1,0 @@
-os: osx
-osx_image: xcode12
-language: swift
-script:
- - fastlane test

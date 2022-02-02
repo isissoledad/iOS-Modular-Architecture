@@ -1,0 +1,16 @@
+workflows:
+  ios-workflow:
+    name: iOS Workflow
+    environment:
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Install pods
+        script: |
+          pod install
+      - name: Bundle install
+        script: |
+          bundle install
+      - name: Run tests
+        script: |
+          bundle exec fastlane tests
