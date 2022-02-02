@@ -13,4 +13,4 @@ workflows:
           bundle install
       - name: Run tests
         script: |
-          bundle exec fastlane tests
+          bundle exec fastlane test
