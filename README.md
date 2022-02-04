@@ -212,7 +212,7 @@ Also closures or delegation can be used.
 	
 # Module's Testing in CI/CD [Optional]: 
 
-* To keep always our modules buildable we need to build and run tests for each module on our Pipeline in CI. As example we can use [Fastlane](https://docs.fastlane.tools/actions/scan/) and [Travis CI](https://travis-ci.org/):
+* To keep always our modules buildable we need to build and run tests for each module on our Pipeline in CI. As example we can use [Fastlane](https://docs.fastlane.tools/actions/scan/) and [Codemagic CI](https://codemagic.io):
 	
 	* [Fastlane script](fastlane/Fastfile)
 
@@ -237,14 +237,28 @@ Also closures or delegation can be used.
 			
 		end
 		```
-	* [Travis CI script](.travis.yml)	
+	* [Codemagic CI script](codemagic.yaml)	
 		  
-		```ruby
-		os: osx
-		osx_image: xcode11.2
-		language: swift
-		script:
-		- fastlane test
+```yaml
+workflows:
+  ios-workflow:
+    name: iOS Workflow
+    environment:
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Install pods
+        script: |
+          pod install
+      - name: Update pods
+        script: |
+          pod update
+      - name: Bundle install
+        script: |
+          bundle install
+      - name: Run tests
+        script: |
+          bundle exec fastlane test
 		```
 
 **Check medium post for more information**: <a href="https://tech.olx.com/modular-architecture-in-ios-c1a1e3bff8e9">Medium Post </a>
