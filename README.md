@@ -259,6 +259,6 @@ workflows:
       - name: Run tests
         script: |
           bundle exec fastlane test
-		```
+```
 
 **Check medium post for more information**: <a href="https://tech.olx.com/modular-architecture-in-ios-c1a1e3bff8e9">Medium Post </a>
