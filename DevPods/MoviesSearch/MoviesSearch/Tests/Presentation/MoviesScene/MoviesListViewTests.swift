@@ -21,34 +21,6 @@ class MoviesListViewTests: FBSnapshotTestCase {
         super.setUp()
         //self.recordMode = true
     }
-
-    func test_whenViewIsEmpty_thenShowEmptyScreen() {
-        // given
-        let vc = MoviesListViewController.create(
-            with: MoviesListViewModelMock.stub(isEmpty: true,
-                                               emptyDataTitle: NSLocalizedString("Search results", comment: ""),
-                                               searchBarPlaceholder: NSLocalizedString("Search Movies", comment: "")
-            ),
-            posterImagesRepository: PosterImagesRepositoryMock())
-
-        // then
-        FBSnapshotVerifyView(vc.view)
-    }
-
-    func test_whenHasItems_thenShowItemsOnScreen() {
-        // given
-        let items = movies.map(MoviesListItemViewModel.init)
-        let vc = MoviesListViewController.create(
-            with: MoviesListViewModelMock.stub(items: Observable(items),
-                                               isEmpty: false,
-                                               emptyDataTitle: NSLocalizedString("Search results", comment: ""),
-                                               searchBarPlaceholder: NSLocalizedString("Search Movies", comment: "")
-            ),
-            posterImagesRepository: PosterImagesRepositoryMock())
-
-        // then
-        FBSnapshotVerifyView(vc.view)
-    }
 }
 
 
