@@ -4,7 +4,16 @@ workflows:
     environment:
       xcode: latest
       cocoapods: default
+      groups:
+        - remote_cache
+      vars:
+        XCODE_PROJECT: "App.xcodeproj"
+        XCODE_TARGET: "App"
+        XCODE_SCHEME: "App"
     scripts:
+      - name: Decode RC Config File
+        script: |
+          echo $rc_config | base64 --decode > $CM_BUILD_DIR/.rcinfo
       - name: Install pods
         script: |
           pod install
@@ -14,6 +23,12 @@ workflows:
       - name: Bundle install
         script: |
           bundle install
-      - name: Run tests
+      - name: Setup XCRemoteCache
         script: |
-          bundle exec fastlane test
+          xcremotecache/xcprepare integrate --input "$XCODE_PROJECT" --mode producer --final-producer-target "$XCODE_TARGET"
+      - name: Build IPA
+        script: |
+          xcodebuild build -project "$XCODE_PROJECT" -scheme "$XCODE_SCHEME" CODE_SIGN_INDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
