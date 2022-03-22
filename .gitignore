@@ -5,3 +5,5 @@
 *.xcuserstate
 project.xcworkspace/
 xcuserdata/
+
+.rcinfo
