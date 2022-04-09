@@ -1,35 +1,19 @@
 workflows:
   ios-workflow:
     name: iOS Workflow
+    instance_type: mac_mini_m1
     environment:
-      xcode: latest
-      cocoapods: default
-      groups:
-        - remote_cache
-      vars:
-        XCODE_PROJECT: "App.xcodeproj"
-        XCODE_WORKSPACE: "App.xcworkspace"
-        XCODE_TARGET: "App"
-        XCODE_SCHEME: "App"
+      xcode: 13.3
     scripts:
-      - name: Decode RC Config File
-        script: |
-          echo $rc_config | base64 --decode > $CM_BUILD_DIR/.rcinfo
       - name: Install pods
         script: |
           pod install
       - name: Update pods
         script: |
           pod update
-      - name: Bundle install
+      - name: Run tests
         script: |
-          bundle install
-      - name: Setup XCRemoteCache
-        script: |
-          xcremotecache/xcprepare integrate --input "$XCODE_PROJECT" --mode producer --final-producer-target "$XCODE_TARGET"
-      - name: Build IPA
-        script: |
-          xcodebuild build -workspace "$XCODE_WORKSPACE" -scheme "$XCODE_SCHEME" CODE_SIGN_INDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          bundle exec fastlane test
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
