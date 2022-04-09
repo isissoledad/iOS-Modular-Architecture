@@ -4,6 +4,9 @@ workflows:
     instance_type: mac_mini_m1
     environment:
       xcode: 13.3
+    triggering: 
+      events:
+        - push
     scripts:
       - name: Install pods
         script: |
@@ -11,6 +14,9 @@ workflows:
       - name: Update pods
         script: |
           pod update
+      - name: Bundle install
+        script: |
+          bundle install
       - name: Run tests
         script: |
           bundle exec fastlane test
