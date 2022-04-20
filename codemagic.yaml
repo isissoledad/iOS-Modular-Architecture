@@ -47,3 +47,27 @@ workflows:
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
+  ios-mac-pro-workflow:
+    name: iOS Mac Pro Workflow
+    instance_type: mac_pro
+    environment:
+      xcode: 13.3
+    triggering: 
+      events:
+        - push
+    scripts:
+      - name: Install pods
+        script: |
+          pod install
+      - name: Update pods
+        script: |
+          pod update
+      - name: Bundle install
+        script: |
+          bundle install
+      - name: Run tests
+        script: |
+          bundle exec fastlane test
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
