@@ -1,7 +1,7 @@
 workflows:
   ios-m1-rosetta-workflow:
-    name: iOS Workflow
-    instance_type: mac_mini
+    name: iOS M1 Rosetta Workflow
+    instance_type: mac_mini_m1
     environment:
       xcode: 13.3
     triggering: 
@@ -24,8 +24,8 @@ workflows:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
   ios-m1-silicon-workflow:
-    name: iOS Workflow
-    instance_type: mac_mini
+    name: iOS M1 Silicon Workflow
+    instance_type: mac_mini_m1
     environment:
       xcode: 13.3
     triggering: 
