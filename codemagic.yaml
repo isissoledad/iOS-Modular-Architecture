@@ -1,5 +1,5 @@
 workflows:
-  ios-workflow:
+  ios-m1-rosetta-workflow:
     name: iOS Workflow
     instance_type: mac_mini
     environment:
@@ -20,6 +20,30 @@ workflows:
       - name: Run tests
         script: |
           bundle exec fastlane test
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+  ios-m1-silicon-workflow:
+    name: iOS Workflow
+    instance_type: mac_mini
+    environment:
+      xcode: 13.3
+    triggering: 
+      events:
+        - push
+    scripts:
+      - name: Install pods
+        script: |
+          pod install
+      - name: Update pods
+        script: |
+          pod update
+      - name: Bundle install
+        script: |
+          bundle install
+      - name: Run tests
+        script: |
+          arch -arm64 bundle exec fastlane test
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
